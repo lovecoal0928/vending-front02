@@ -2,7 +2,7 @@ export interface Drinks {
   id: number
   name: string
   price: number
-  src?: string
+  src: string
   hot_flag: boolean
   soda_flag: boolean
   created_at: string
