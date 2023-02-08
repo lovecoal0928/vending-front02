@@ -30,10 +30,14 @@
         p-5 justify-center items-center rounded-md
     }
     .productBtn {
-        @apply flex bg-[#eee] w-[22%] h-36 m-[1.5%]
+        @apply flex bg-[#eee] w-[22%] h-36 m-[1.5%] p-2
         justify-center items-center rounded-sm
     }
     .customizeBtn {
         @apply flex justify-center items-center bg-[#eee] py-4 rounded-sm mb-2
+    }
+
+    .shadow-product {
+        box-shadow: 0 0 5px gray;
     }
 }

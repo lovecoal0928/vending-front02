@@ -2,6 +2,8 @@ import axios from 'axios'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { CustomizeState, SelectedState } from '../atoms/customizeAtom'
 import Banner from '../components/Banner'
 import CustomizePanel from '../components/CustomizePanel'
 import Header from '../components/Header'
@@ -9,14 +11,15 @@ import Products from '../components/Products'
 
 
 const Home = () => {
-  const [posts, setPosts] = useState([])
+
+  const [product, setProduct] = useState([])
 
   useEffect(() => {
     axios
     .get(`${process.env.NEXT_PUBLIC_DRINKS_URL}`)
     .then(res=>{
-      setPosts(res.data)
-      console.log("axiosGetData:", setPosts)
+      setProduct(res.data)
+      console.log("axiosGetData:", setProduct)
     })
     .catch(err=>{
       console.log("axiosGetErr",err)
@@ -45,16 +48,16 @@ const Home = () => {
           {/* product-list */}
           <div className='mainBox w-[65%]'>
               <ul className='flex flex-wrap'>
-                  <li className='productBtn'>
-                    {posts.map(drink => (
-                      <Products key={drink.id} drink={drink} />
-                    ))}
-                  </li>
+                  {product.map(drink => (
+                    <li className='productBtn cursor-pointer'>
+                        <Products key={drink.id} drink={drink} />
+                    </li>
+                  ))}
               </ul>
           </div>
 
           {/* customize-panel */}
-          <CustomizePanel />
+          <CustomizePanel/>
         </section>
     
       </main>
