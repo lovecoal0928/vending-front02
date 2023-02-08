@@ -1,9 +1,6 @@
 import axios from 'axios'
 import Head from 'next/head'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
-import { CustomizeState, SelectedState } from '../atoms/customizeAtom'
 import Banner from '../components/Banner'
 import CustomizePanel from '../components/CustomizePanel'
 import Header from '../components/Header'
@@ -50,7 +47,7 @@ const Home = () => {
               <ul className='flex flex-wrap'>
                   {product.map(drink => (
                     <li className='productBtn cursor-pointer'>
-                        <Products key={drink.id} drink={drink} />
+                        <Products key={drink?.id} drink={drink} />
                     </li>
                   ))}
               </ul>

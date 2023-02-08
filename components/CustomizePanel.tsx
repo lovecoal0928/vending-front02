@@ -1,7 +1,6 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { CustomizeState, SelectedState } from '../atoms/customizeAtom'
-import { Drinks } from '../typings'
 
 const CustomizePanel = () => {
   const [selected, setSelected] = useRecoilState(SelectedState)
