@@ -44,9 +44,9 @@ const Home = () => {
 
           {/* product-list */}
           <div className='mainBox w-[65%]'>
-              <ul className='flex flex-wrap'>
+              <ul className='flex justify-center items-center flex-wrap'>
                   {product.map(drink => (
-                    <li className='productBtn cursor-pointer'>
+                    <li className='w-[22%] m-[1%] cursor-pointer'>
                         <Products key={drink?.id} drink={drink} />
                     </li>
                   ))}

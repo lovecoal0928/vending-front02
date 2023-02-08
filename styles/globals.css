@@ -30,11 +30,11 @@
         p-5 justify-center items-center rounded-md
     }
     .productBtn {
-        @apply flex bg-[#eee] w-[22%] h-36 m-[1.5%] p-2
-        justify-center items-center rounded-sm
+        @apply flex-col bg-[#eee] w-[22%] h-36 p-1
+        justify-center items-center rounded-sm select-none
     }
     .customizeBtn {
-        @apply flex justify-center items-center bg-[#eee] py-4 rounded-sm mb-2
+        @apply flex justify-center items-center bg-[#eee] py-4 rounded-sm mb-2 select-none
     }
 
     .shadow-product {

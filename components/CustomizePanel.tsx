@@ -1,4 +1,6 @@
+import Image from 'next/image'
 import React from 'react'
+import { Form } from 'react-bootstrap'
 import { useRecoilState } from 'recoil'
 import { CustomizeState, SelectedState } from '../atoms/customizeAtom'
 
@@ -21,34 +23,49 @@ const CustomizePanel = () => {
       <div className='flex w-full justify-between'>
 
         <div className='flex-col w-[48.7%] h-[196px]'>
-          <div className='customizeBtn h-[61px] flex-col p-1 items-start justify-start'>
-            <p className='text-base'>合計金額</p>
+        <div className='customizeBtn h-[61px] flex-col p-1 items-start justify-start'>
+            <p className='text-[0.9rem] leading-snug'>合計金額</p>
             {showCustomize &&
-              <div className='flex items-baseline'>￥
-                <p className='text-2xl'>{selected?.price}</p>
+              <div className='flex items-baseline m-0 ml-auto'>￥
+                <p className='text-3xl'>{selected?.price}</p>
               </div>
             }
           </div>
           <div className='customizeBtn h-[61px] flex-col p-1 items-start justify-start'>
-            <p className='text-[0.8rem] leading-snug'>投入金額</p>
+            <p className='text-[0.9rem] leading-snug'>投入金額</p>
             {showCustomize &&
-              <div className='flex items-baseline'>￥
-                <p className='text-2xl'>{selected?.price}</p>
+              <div className='flex items-baseline m-0 ml-auto'>￥
+                <p className='text-3xl'>10000</p>
               </div>
             }
           </div>
-          <div className='customizeBtn h-[50px]'>
-            use-preset
+          <div className='customizeBtn h-[50px] text-[1rem] cursor-pointer'>
+            プリセットを使用
           </div>{/* boolean */}
         </div>
 
         <div className='flex-col w-[48.7%] h-[196px]'>
           <div className='customizeBtn h-[130px]'>
-            drink image
+            {showCustomize &&
+              <Image 
+                src={`${selected?.src}`}
+                width={105}
+                height={105}
+                className='shadow-product'
+                alt={`${selected?.name}`}
+              />
+            }
           </div>
-          <div className='customizeBtn h-[50px]'>
-            my-bottle
-          </div>{/* boolean */}
+          <label className='customizeBtn h-[50px] cursor-pointer'>
+            <p className='flex text-[1.2rem]'>マイボトル
+              <Form>
+                <Form.Check 
+                  type="switch"
+                  id="custom-switch"
+                />
+              </Form>
+            </p>
+          </label>{/* boolean */}
         </div>
       </div>
 

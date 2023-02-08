@@ -1,4 +1,3 @@
-import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import { useRecoilState } from "recoil"
 import { CustomizeState, SelectedState } from '../atoms/customizeAtom'
@@ -13,7 +12,7 @@ const Products = ({drink}: Props) => {
   const [showCustomize, setShowCustomize] = useRecoilState(CustomizeState)
 
   return (
-    <div className='flex-col w-full h-full shadow-product'
+    <div className='productBtn w-full h-full'
     onClick={() => {
       setSelected(drink)
       setShowCustomize(true)
