@@ -36,6 +36,9 @@
     .customizeBtn {
         @apply flex justify-center items-center bg-[#eee] py-4 rounded-sm mb-2 select-none
     }
+    .customizeBtnF {
+        @apply flex justify-center items-center bg-[#789] py-4 rounded-sm mb-2 select-none
+    }
 
     .shadow-product {
         box-shadow: 0 0 5px gray;

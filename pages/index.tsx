@@ -47,7 +47,7 @@ const Home = () => {
               <ul className='flex justify-center items-center flex-wrap'>
                   {product.map(drink => (
                     <li className='w-[22%] m-[1%] cursor-pointer'>
-                        <Products key={drink?.id} drink={drink} />
+                        <Products key={drink.id} drink={drink} />
                     </li>
                   ))}
               </ul>
