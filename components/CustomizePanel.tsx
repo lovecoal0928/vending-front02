@@ -1,19 +1,32 @@
 import Image from 'next/image'
-import React from 'react'
-import { Form } from 'react-bootstrap'
+import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import * as Bi from 'react-icons/bi'
 import * as Bs from 'react-icons/bs'
 import * as Tb from 'react-icons/tb'
-import { CustomizeState, SelectedState } from '../atoms/customizeAtom'
-import { IconBase } from 'react-icons'
+import { BottleState, CustomizeState, SelectedState } from '../atoms/customizeAtom'
 
 const CustomizePanel = () => {
   const [selected, setSelected] = useRecoilState(SelectedState)
   const [showCustomize, setShowCustomize] = useRecoilState(CustomizeState)
 
+  const [currentSize, setCurrentSize] = useState(1)
+  const [currentHotTemp, setCurrentHotTemp] = useState(60)
+  const [currentColdTemp, setCurrentColdTemp] = useState(0)
+  const [useBottle, setUseBottle] = useRecoilState(BottleState)
+
+  // カスタマイズのキャンセル
   const handleCancel = () => {
     setShowCustomize(false)
+    setUseBottle(false)
+    setCurrentSize(1)
+    setCurrentHotTemp(60)
+    setCurrentColdTemp(25)
+  }
+
+  // マイボトルのオンオフ
+  const setBottle = () => {
+    setUseBottle(!useBottle)
   }
 
   return (
@@ -31,31 +44,31 @@ const CustomizePanel = () => {
           <div className='flex-col w-[48.7%] h-[196px]'>
           {showCustomize
           ? <>
-              <div className='customizeBtn h-[61px] flex-col p-1 items-start justify-start'>
+              <div className='customizeBtn h-[61px] flex-col p-1 justify-start'>
                 <p className='text-[0.9rem] leading-snug'>合計金額</p>
                   <div className='flex items-baseline m-0 ml-auto'>￥
                     <p className='text-3xl'>{selected?.price}</p>
                   </div>
               </div>
-              <div className='customizeBtn h-[61px] flex-col p-1 items-start justify-start'>
+              <div className='customizeBtn h-[61px] flex-col p-1 justify-start'>
                 <p className='text-[0.9rem] leading-snug'>投入金額</p>
                   <div className='flex items-baseline m-0 ml-auto'>￥
                     <p className='text-3xl'>10000</p>
                   </div>
               </div>
-              <div className='customizeBtn h-[50px] text-[1.2rem] cursor-pointer'>
-                <Bi.BiExport className='mr-1' />プリセット
+              <div className='customizeBtn h-[50px] text-[1.2rem] cursor-pointer active:bg-[#fff]'>
+                <Bi.BiExport className='w-8 h-8 pr-1' />プリセット
               </div>{/* boolean */}
             </>
           : <>
-              <div className='customizeBtnF h-[61px] flex-col p-1 items-start justify-start'>
+              <div className='customizeBtnF h-[61px] flex-col p-1 justify-start'>
                 <p className='text-[0.9rem] leading-snug'>合計金額</p>
               </div>
-              <div className='customizeBtnF h-[61px] flex-col p-1 items-start justify-start'>
+              <div className='customizeBtnF h-[61px] flex-col p-1 justify-start'>
                 <p className='text-[0.9rem] leading-snug'>投入金額</p>
               </div>
               <div className='customizeBtnF h-[50px] text-[1.2rem]' >
-                <Bi.BiExport className='mr-1' />プリセット
+                <Bi.BiExport className='w-8 h-8 pr-1' />プリセット
               </div>
             </>
           }
@@ -69,27 +82,26 @@ const CustomizePanel = () => {
                     src={`${selected?.src}`}
                     width={105}
                     height={105}
-                    className='shadow-product'
+                    className='shadow-product rounded-md'
                     alt={`${selected?.name}`}
                   />
               </div>
-              <label className='customizeBtn h-[50px] cursor-pointer text-[1.2rem]'>
-                <Tb.TbBottle className='w-6 h-6 mb-[-3px]'/>マイボトル
-                <Form>
-                  <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                  />
-                </Form>
-              </label>{/* boolean */}
+              {useBottle
+              ? <div className='customizeBtn h-[50px] cursor-pointer text-[1.2rem] bg-green-300 active:bg-[#fff]' onClick={setBottle}>
+                  <Bs.BsCheck2Circle className='w-8 h-8 mb-[-3px] pr-2' />マイボトル
+                </div>
+              : <div className='customizeBtn h-[50px] cursor-pointer text-[1.2rem] active:bg-[#fff]' onClick={setBottle}>
+                  <Tb.TbBottle className='w-8 h-8 mb-[-3px] pr-2' />マイボトル
+                </div>
+              }
             </>
           : <>
               <div className='customizeBtnF h-[130px]'>
                 <Bs.BsImage className='w-10 h-10' />
               </div>
-              <label className='customizeBtnF h-[50px] text-[1.2rem]'>
-                <Tb.TbBottle className='w-6 h-6 mb-[-3px]'/>マイボトル
-              </label>{/* boolean */}
+              <div className='customizeBtnF h-[50px] text-[1.2rem]'>
+                <Tb.TbBottle className='w-8 h-8 mb-[-3px] pr-2'/>マイボトル
+              </div>
             </>
           }
           </div>
@@ -98,19 +110,65 @@ const CustomizePanel = () => {
         <div className='flex-col w-full'>
           {showCustomize
           ? <>
-              <div className='customizeBtn h-16'>
-                drink size
+              <div className='customizeBtn h-16 flex-col pt-2 p-1 justify-start'>
+                <div className='flex flex-row text-[1rem] mb-[-5px]'>
+                  サイズ：<p className='leading-3 text-[1.3rem] pl-2 flex w-14 justify-center items-center'>{currentSize}mL</p>
+                </div>
+                <input
+                  type="range"
+                  min="300"
+                  max="600"
+                  step="100"
+                  value={currentSize}
+                  className='sizeSeek'
+                  onChange={(ev:React.ChangeEvent<HTMLInputElement>) => {
+                    setCurrentSize(parseInt(ev.target.value))
+                  }}
+                />
               </div>
-              <div className='customizeBtn h-16'>
-                gas volume or temp
+              <div className='customizeBtn h-16 flex-col pt-2 p-1 justify-start'>
+                {selected?.hot_flag
+                ? <>
+                    <div className='flex flex-row text-[1rem] mb-[-5px]'>
+                      温度：<p className='leading-3 text-[1.3rem] pl-2 flex w-14 justify-center items-center'>{currentHotTemp}℃</p>
+                    </div>
+                    <input
+                      type="range"
+                      min="60"
+                      max="100"
+                      step="1"
+                      value={currentHotTemp}
+                      className='hotSeek'
+                      onChange={(ev:React.ChangeEvent<HTMLInputElement>) => {
+                        setCurrentHotTemp(parseInt(ev.target.value))
+                      }}
+                    />
+                  </>
+                : <>
+                    <div className='flex flex-row text-[1rem] mb-[-5px]'>
+                      温度：<p className='leading-3 text-[1.3rem] pl-2 flex w-14 justify-center items-center'>{currentColdTemp}℃</p>
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="25"
+                      step="1"
+                      value={currentColdTemp}
+                      className='coldSeek'
+                      onChange={(ev:React.ChangeEvent<HTMLInputElement>) => {
+                        setCurrentColdTemp(parseInt(ev.target.value))
+                      }}
+                    />
+                  </>
+                }
               </div>
             </>
           : <>
               <div className='customizeBtnF h-16'>
-                drink size
+                サイズ
               </div>
               <div className='customizeBtnF h-16'>
-                gas volume or temp
+                温度
               </div>
             </>
           }
@@ -119,12 +177,12 @@ const CustomizePanel = () => {
         <div className='flex w-full justify-between h-20'>
           {showCustomize
           ? <>
-              <div className='customizeBtn w-[48.7%] text-white bg-red-500 cursor-pointer'
+              <div className='customizeBtn w-[48.7%] text-white bg-red-500 active:bg-[#f66] cursor-pointer'
                 onClick={handleCancel}>
                 キャンセル
               </div>
               <div className='customizeBtn w-[48.7%]'>
-                <Bs.BsCartCheck />購入
+                <Bs.BsCartCheck className='w-8 h-8 pr-2' />購入
               </div>
             </>
           : <>
@@ -132,8 +190,8 @@ const CustomizePanel = () => {
                 onClick={handleCancel}>
                 キャンセル
               </div>
-              <div className='customizeBtnF w-[48.7s%]'>
-                <Bs.BsCartCheck />購入
+              <div className='customizeBtnF w-[48.7%]'>
+                <Bs.BsCartCheck className='w-8 h-8 pr-2' />購入
               </div>
             </>
           }

@@ -10,6 +10,7 @@ import Products from '../components/Products'
 const Home = () => {
 
   const [product, setProduct] = useState([])
+  // priset
 
   useEffect(() => {
     axios
@@ -34,7 +35,7 @@ const Home = () => {
       <Header />
 
       {/* vending-mech */}
-      <main className='relative flex-row w-[1000px] h-full p-10 mt-32 mx-auto rounded-3xl bg-gray-300'> {/* bg-sky-500 */}
+      <main className='relative flex-row w-[1000px] h-full p-10 mt-32 mx-auto rounded-3xl bg-sky-400'>
 
         {/* vending-banner */}
         <Banner />
@@ -54,7 +55,7 @@ const Home = () => {
           </div>
 
           {/* customize-panel */}
-          <CustomizePanel/>
+          <CustomizePanel />
         </section>
     
       </main>

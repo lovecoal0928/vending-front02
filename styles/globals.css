@@ -30,17 +30,50 @@
         p-5 justify-center items-center rounded-md
     }
     .productBtn {
-        @apply flex-col bg-[#eee] w-[22%] h-36 p-1
+        @apply flex-col bg-sky-400 w-[22%] h-36 p-1
         justify-center items-center rounded-sm select-none
+        active:bg-[#fff]
     }
     .customizeBtn {
-        @apply flex justify-center items-center bg-[#eee] py-4 rounded-sm mb-2 select-none
+        @apply flex justify-center items-center bg-sky-200 py-4 rounded-sm mb-2 select-none
     }
     .customizeBtnF {
-        @apply flex justify-center items-center bg-[#789] py-4 rounded-sm mb-2 select-none
+        @apply flex justify-center items-center bg-[#567] py-4 rounded-sm mb-2 select-none
     }
 
     .shadow-product {
-        box-shadow: 0 0 5px gray;
+        box-shadow: 0 0 7px #6bf, 0 0 7px #6bf;
+    }
+    .sizeSeek,
+    .hotSeek,
+    .coldSeek {
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        outline:none;
+        display: flex;
+        margin: auto;
+        width: 90%;
+        height: 11px;
+        border: solid 2px rgb(253, 255, 255);
+        border-radius: 6px;
+    }
+    .sizeSeek {
+        background: linear-gradient(to right,rgb(52, 255, 137),rgb(228, 230, 108),rgb(228, 94, 76));
+    }
+    .hotSeek {
+        background: linear-gradient(to right,rgb(212, 77, 77),rgb(236, 131, 71),rgb(216, 208, 98));
+    }
+    .coldSeek {
+        background: linear-gradient(to right,rgb(157, 92, 241),rgb(83, 119, 238),rgb(99, 211, 196));
+    }
+    .sizeSeek::-webkit-slider-thumb,
+    .hotSeek::-webkit-slider-thumb,
+    .coldSeek::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        transform: rotate(45deg);
+        background: rgb(68, 78, 92);
     }
 }
