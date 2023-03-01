@@ -15,8 +15,19 @@ const CustomizePanel = () => {
   const [currentColdTemp, setCurrentColdTemp] = useState(0)
   const [useBottle, setUseBottle] = useRecoilState(BottleState)
 
+  const [currentPrice, setCurrentPrice] = useState(0)
+
   // カスタマイズのキャンセル
   const handleCancel = () => {
+    setShowCustomize(false)
+    setUseBottle(false)
+    setCurrentSize(1)
+    setCurrentHotTemp(60)
+    setCurrentColdTemp(25)
+  }
+
+  // 商品の購入
+  const handlePurchase = () => {
     setShowCustomize(false)
     setUseBottle(false)
     setCurrentSize(1)
@@ -27,6 +38,10 @@ const CustomizePanel = () => {
   // マイボトルのオンオフ
   const setBottle = () => {
     setUseBottle(!useBottle)
+  }
+
+  const changePrice = () => {
+    const CurrentPrice=(selected?.price)
   }
 
   return (
@@ -87,7 +102,7 @@ const CustomizePanel = () => {
                   />
               </div>
               {useBottle
-              ? <div className='customizeBtn h-[50px] cursor-pointer text-[1.2rem] bg-green-300 active:bg-[#fff]' onClick={setBottle}>
+              ? <div className='customizeBtn h-[50px] cursor-pointer text-[1.2rem] bg-green-300 active:bg-[#fff]' onClick={setBottle} onChange={changePrice}>
                   <Bs.BsCheck2Circle className='w-8 h-8 mb-[-3px] pr-2' />マイボトル
                 </div>
               : <div className='customizeBtn h-[50px] cursor-pointer text-[1.2rem] active:bg-[#fff]' onClick={setBottle}>
@@ -123,6 +138,7 @@ const CustomizePanel = () => {
                   className='sizeSeek'
                   onChange={(ev:React.ChangeEvent<HTMLInputElement>) => {
                     setCurrentSize(parseInt(ev.target.value))
+                    changePrice
                   }}
                 />
               </div>
@@ -141,6 +157,7 @@ const CustomizePanel = () => {
                       className='hotSeek'
                       onChange={(ev:React.ChangeEvent<HTMLInputElement>) => {
                         setCurrentHotTemp(parseInt(ev.target.value))
+                        changePrice
                       }}
                     />
                   </>
@@ -157,6 +174,7 @@ const CustomizePanel = () => {
                       className='coldSeek'
                       onChange={(ev:React.ChangeEvent<HTMLInputElement>) => {
                         setCurrentColdTemp(parseInt(ev.target.value))
+                        changePrice
                       }}
                     />
                   </>
@@ -181,7 +199,7 @@ const CustomizePanel = () => {
                 onClick={handleCancel}>
                 キャンセル
               </div>
-              <div className='customizeBtn w-[48.7%]'>
+              <div className='customizeBtn w-[48.7%] cursor-pointer' onClick={handlePurchase}>
                 <Bs.BsCartCheck className='w-8 h-8 pr-2' />購入
               </div>
             </>

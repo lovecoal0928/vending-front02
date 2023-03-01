@@ -76,4 +76,9 @@
         transform: rotate(45deg);
         background: rgb(68, 78, 92);
     }
+    .sizeSeek::-webkit-slider-thumb:active,
+    .hotSeek::-webkit-slider-thumb:active,
+    .coldSeek::-webkit-slider-thumb:active {
+        background: rgb(106, 124, 148);
+    }
 }

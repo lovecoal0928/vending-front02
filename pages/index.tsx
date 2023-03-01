@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Head from 'next/head'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import Banner from '../components/Banner'
 import CustomizePanel from '../components/CustomizePanel'
@@ -57,6 +58,13 @@ const Home = () => {
           {/* customize-panel */}
           <CustomizePanel />
         </section>
+        <Image
+          src="/../public/coinput.png"
+          width={180}
+          height={180}
+          className='mr-10 ml-auto'
+          alt="お金投入口"
+        />
     
       </main>
     </div>
