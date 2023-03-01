@@ -4,11 +4,12 @@ import { useRecoilState } from 'recoil'
 import * as Bi from 'react-icons/bi'
 import * as Bs from 'react-icons/bs'
 import * as Tb from 'react-icons/tb'
-import { BottleState, CustomizeState, SelectedState } from '../atoms/customizeAtom'
+import { BottleState, CustomizeState, SelectedState, ThanksState } from '../atoms/customizeAtom'
 
 const CustomizePanel = () => {
   const [selected, setSelected] = useRecoilState(SelectedState)
   const [showCustomize, setShowCustomize] = useRecoilState(CustomizeState)
+  const [showThanks, setShowThanks] = useRecoilState(ThanksState)
 
   const [currentSize, setCurrentSize] = useState(1)
   const [currentHotTemp, setCurrentHotTemp] = useState(60)
@@ -28,11 +29,8 @@ const CustomizePanel = () => {
 
   // 商品の購入
   const handlePurchase = () => {
-    setShowCustomize(false)
-    setUseBottle(false)
-    setCurrentSize(1)
-    setCurrentHotTemp(60)
-    setCurrentColdTemp(25)
+    setShowThanks(true)
+    handleCancel()
   }
 
   // マイボトルのオンオフ
@@ -192,7 +190,7 @@ const CustomizePanel = () => {
           }
         </div>
 
-        <div className='flex w-full justify-between h-20'>
+        <div className='flex w-full justify-between h-[75px]'>
           {showCustomize
           ? <>
               <div className='customizeBtn w-[48.7%] text-white bg-red-500 active:bg-[#f66] cursor-pointer'

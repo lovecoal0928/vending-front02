@@ -1,9 +1,13 @@
 import axios from 'axios'
 import Head from 'next/head'
 import Image from 'next/image'
+import { gsap } from 'gsap'
 import { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { ThanksState } from '../atoms/customizeAtom'
 import Banner from '../components/Banner'
 import CustomizePanel from '../components/CustomizePanel'
+import Thanks from '../components/Thanks'
 import Header from '../components/Header'
 import Products from '../components/Products'
 
@@ -11,7 +15,17 @@ import Products from '../components/Products'
 const Home = () => {
 
   const [product, setProduct] = useState([])
-  // priset
+  const [showThanks, setShowThanks] = useRecoilState(ThanksState)
+
+  useEffect(() => {
+    let timeout:NodeJS.Timeout
+    if(showThanks) {
+      timeout = setTimeout(() => {
+        setShowThanks(false)
+      }, 4000)
+    }
+    return () => clearTimeout(timeout)
+  }, [showThanks])
 
   useEffect(() => {
     axios
@@ -56,7 +70,10 @@ const Home = () => {
           </div>
 
           {/* customize-panel */}
-          <CustomizePanel />
+          {showThanks
+          ? <Thanks />
+          : <CustomizePanel />
+          }
         </section>
         <Image
           src="/../public/coinput.png"
