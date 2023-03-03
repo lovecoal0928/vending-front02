@@ -35,10 +35,10 @@
         active:bg-[#fff]
     }
     .customizeBtn {
-        @apply flex justify-center items-center bg-sky-200 py-4 rounded-sm mb-2 select-none
+        @apply flex justify-center items-center bg-sky-200 py-4 rounded-sm mb-2 select-none animate-fade-in
     }
     .customizeBtnF {
-        @apply flex justify-center items-center bg-[#567] py-4 rounded-sm mb-2 select-none
+        @apply flex justify-center items-center bg-[#567] py-4 rounded-sm mb-2 select-none animate-fade-in
     }
 
     .shadow-product {

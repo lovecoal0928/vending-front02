@@ -47,10 +47,10 @@ const Home = () => {
       </Head>
 
       {/* header */}
-      <Header />
+      {/* <Header /> */}
 
       {/* vending-mech */}
-      <main className='relative flex-row w-[1000px] h-full p-10 mt-32 mx-auto rounded-3xl bg-sky-400'>
+      <main className='relative flex-row w-[1000px] h-full p-10 mt-10 mx-auto rounded-3xl bg-sky-400'>
 
         {/* vending-banner */}
         <Banner />
@@ -79,7 +79,7 @@ const Home = () => {
           src="/../public/coinput.png"
           width={180}
           height={180}
-          className='mr-10 ml-auto'
+          className='mr-20 ml-auto'
           alt="お金投入口"
         />
     

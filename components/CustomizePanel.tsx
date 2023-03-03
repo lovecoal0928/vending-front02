@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import React, { useState } from 'react'
-import { useRecoilState } from 'recoil'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import * as Bi from 'react-icons/bi'
 import * as Bs from 'react-icons/bs'
 import * as Tb from 'react-icons/tb'
@@ -11,18 +11,19 @@ const CustomizePanel = () => {
   const [showCustomize, setShowCustomize] = useRecoilState(CustomizeState)
   const [showThanks, setShowThanks] = useRecoilState(ThanksState)
 
-  const [currentSize, setCurrentSize] = useState(1)
+  const [currentSize, setCurrentSize] = useState(300)
   const [currentHotTemp, setCurrentHotTemp] = useState(60)
   const [currentColdTemp, setCurrentColdTemp] = useState(0)
   const [useBottle, setUseBottle] = useRecoilState(BottleState)
+  const [bottlePrice, setBottlePrice] = useState(0)
 
-  const [currentPrice, setCurrentPrice] = useState(0)
-
+  const [totalPrice, setTotalPrice] = useState(selected?.price)
   // カスタマイズのキャンセル
   const handleCancel = () => {
     setShowCustomize(false)
     setUseBottle(false)
-    setCurrentSize(1)
+    setTotalPrice(selected?.price)
+    setCurrentSize(300)
     setCurrentHotTemp(60)
     setCurrentColdTemp(25)
   }
@@ -36,10 +37,24 @@ const CustomizePanel = () => {
   // マイボトルのオンオフ
   const setBottle = () => {
     setUseBottle(!useBottle)
+    console.log(useBottle)
+    if (!selected?.price) {
+      return;
+    }
+    setBottlePrice(useBottle ? 0 : -40)
+    if (!totalPrice) {
+      const newPrice = selected?.price
+      setTotalPrice(newPrice)
+    }
   }
 
-  const changePrice = () => {
-    const CurrentPrice=(selected?.price)
+  // サイズ変更による値段の変更
+  const changePrice = (size: number) => {
+    if (!selected?.price) {
+      return;
+    }
+    const newPrice = selected.price + ((size -300)/ 4)
+    setTotalPrice(newPrice)
   }
 
   return (
@@ -60,13 +75,13 @@ const CustomizePanel = () => {
               <div className='customizeBtn h-[61px] flex-col p-1 justify-start'>
                 <p className='text-[0.9rem] leading-snug'>合計金額</p>
                   <div className='flex items-baseline m-0 ml-auto'>￥
-                    <p className='text-3xl'>{selected?.price}</p>
+                    <p className='text-3xl'>{totalPrice ?totalPrice + bottlePrice :selected?.price}</p>
                   </div>
               </div>
               <div className='customizeBtn h-[61px] flex-col p-1 justify-start'>
                 <p className='text-[0.9rem] leading-snug'>投入金額</p>
                   <div className='flex items-baseline m-0 ml-auto'>￥
-                    <p className='text-3xl'>10000</p>
+                    <p className='text-3xl'>1000</p>
                   </div>
               </div>
               <div className='customizeBtn h-[50px] text-[1.2rem] cursor-pointer active:bg-[#fff]'>
@@ -100,10 +115,12 @@ const CustomizePanel = () => {
                   />
               </div>
               {useBottle
-              ? <div className='customizeBtn h-[50px] cursor-pointer text-[1.2rem] bg-green-300 active:bg-[#fff]' onClick={setBottle} onChange={changePrice}>
+              ? <div className={`customizeBtn h-[50px] cursor-pointer text-[1.2rem] bg-green-300 active:bg-[#fff]`}
+                  onClick={setBottle}>
                   <Bs.BsCheck2Circle className='w-8 h-8 mb-[-3px] pr-2' />マイボトル
                 </div>
-              : <div className='customizeBtn h-[50px] cursor-pointer text-[1.2rem] active:bg-[#fff]' onClick={setBottle}>
+              : <div className={`customizeBtn h-[50px] cursor-pointer text-[1.2rem] active:bg-[#fff]`}
+                  onClick={setBottle}>
                   <Tb.TbBottle className='w-8 h-8 mb-[-3px] pr-2' />マイボトル
                 </div>
               }
@@ -136,7 +153,7 @@ const CustomizePanel = () => {
                   className='sizeSeek'
                   onChange={(ev:React.ChangeEvent<HTMLInputElement>) => {
                     setCurrentSize(parseInt(ev.target.value))
-                    changePrice
+                    changePrice(parseInt(ev.target.value))
                   }}
                 />
               </div>

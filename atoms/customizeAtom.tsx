@@ -13,6 +13,14 @@ export const BottleState = atom({
     key:'BottleState',
     default:false
 })
+export const FadeBefore = atom({
+    key:'FadeBefore',
+    default:'animate-fade-out'
+})
+export const FadeAfter = atom({
+    key:'FadeAfter',
+    default:'animate-fade-in'
+})
 
 export const SelectedState = atom<Drinks | null>({
     key:'SelectedState',
