@@ -1,7 +1,6 @@
 import axios from 'axios'
 import Head from 'next/head'
 import Image from 'next/image'
-import { gsap } from 'gsap'
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { ThanksState } from '../atoms/customizeAtom'
@@ -10,9 +9,11 @@ import CustomizePanel from '../components/CustomizePanel'
 import Thanks from '../components/Thanks'
 import Header from '../components/Header'
 import Products from '../components/Products'
-
-
-const Home = () => {
+import { Drinks } from '../typings'
+interface Props {
+  drink: Drinks
+}
+const Home = ({drink}: Props) => {
 
   const [product, setProduct] = useState([])
   const [showThanks, setShowThanks] = useRecoilState(ThanksState)
